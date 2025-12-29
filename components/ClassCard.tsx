@@ -57,11 +57,11 @@ export default function ClassCard({
         )}
 
         {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent)' }}></div>
 
         {/* Activity Badge */}
         <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 bg-white/95 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-900 capitalize shadow-md transition-transform duration-200 group-hover:scale-105">
+          <span className="px-3 py-1 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-900 capitalize shadow-md transition-transform duration-200 group-hover:scale-105" style={{ backgroundColor: 'rgba(255, 255, 255, 0.95)' }}>
             {activity}
           </span>
         </div>
@@ -69,7 +69,7 @@ export default function ClassCard({
         {/* Spots Badge */}
         {spotsLeft <= 3 && spotsLeft > 0 && (
           <div className="absolute top-4 right-4 animate-bounce-subtle">
-            <span className="px-3 py-1 bg-red-500/95 backdrop-blur-sm rounded-full text-xs font-semibold text-white shadow-md">
+            <span className="px-3 py-1 backdrop-blur-sm rounded-full text-xs font-semibold text-white shadow-md" style={{ backgroundColor: 'rgba(239, 68, 68, 0.95)' }}>
               ¡Últimos {spotsLeft} cupos!
             </span>
           </div>

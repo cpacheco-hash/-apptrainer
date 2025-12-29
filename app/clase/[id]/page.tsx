@@ -85,14 +85,14 @@ export default function ClassDetailPage({ params }: { params: { id: string } }) 
 
               {/* Activity Badge */}
               <div className="absolute top-6 left-6">
-                <span className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full text-sm font-semibold text-gray-900">
+                <span className="px-4 py-2 backdrop-blur-sm rounded-full text-sm font-semibold text-gray-900" style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
                   {classData.activity}
                 </span>
               </div>
 
               {/* Type Badge */}
               <div className="absolute top-6 right-6">
-                <span className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-full text-sm font-semibold text-gray-900">
+                <span className="px-4 py-2 backdrop-blur-sm rounded-full text-sm font-semibold text-gray-900" style={{ backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
                   Clase {classData.type}
                 </span>
               </div>

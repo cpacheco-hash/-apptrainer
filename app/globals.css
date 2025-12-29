@@ -36,11 +36,15 @@ body {
 @layer components {
   /* Efectos de cristal (glassmorphism) */
   .glass {
-    @apply bg-white/80 backdrop-blur-md border border-white/20;
+    @apply backdrop-blur-md border;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
   .glass-dark {
-    @apply bg-gray-900/80 backdrop-blur-md border border-gray-800/20;
+    @apply backdrop-blur-md border;
+    background-color: rgba(17, 24, 39, 0.8);
+    border-color: rgba(31, 41, 55, 0.2);
   }
 
   /* Gradientes personalizados */

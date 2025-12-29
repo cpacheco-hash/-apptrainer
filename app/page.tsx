@@ -12,9 +12,9 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center justify-center gradient-hero overflow-hidden">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-primary-300/20 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary-300/20 rounded-full blur-3xl animate-float" style={{ animationDelay: "1s" }}></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-primary-200/10 to-secondary-200/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl animate-float" style={{ backgroundColor: 'rgba(134, 239, 172, 0.2)' }}></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl animate-float" style={{ backgroundColor: 'rgba(147, 197, 253, 0.2)', animationDelay: "1s" }}></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl" style={{ background: 'linear-gradient(to right, rgba(187, 247, 208, 0.1), rgba(191, 219, 254, 0.1))' }}></div>
         </div>
 
         {/* Background Pattern */}
@@ -33,7 +33,7 @@ export default function Home() {
 
             {/* Badge */}
             <div className="flex justify-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md border border-primary-100 animate-slide-in-right">
+              <div className="inline-flex items-center gap-2 px-4 py-2 backdrop-blur-sm rounded-full shadow-md border border-primary-100 animate-slide-in-right" style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
                 <Sparkles className="w-4 h-4 text-primary-600" />
                 <span className="text-sm font-semibold text-gray-700">
                   La plataforma líder en fitness outdoor
@@ -98,8 +98,8 @@ export default function Home() {
       {/* Features Section */}
       <section className="py-24 bg-white relative overflow-hidden">
         {/* Background decoration */}
-        <div className="absolute top-0 left-0 w-64 h-64 bg-primary-100/30 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary-100/30 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-0 w-64 h-64 rounded-full blur-3xl" style={{ backgroundColor: 'rgba(220, 252, 231, 0.3)' }}></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: 'rgba(219, 234, 254, 0.3)' }}></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16 animate-fade-in-up">
@@ -159,12 +159,12 @@ export default function Home() {
       <section className="relative py-24 gradient-primary overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
-        <div className="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-float" style={{ animationDelay: "1s" }}></div>
+        <div className="absolute top-10 left-10 w-64 h-64 rounded-full blur-3xl animate-float" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}></div>
+        <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full blur-3xl animate-float" style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', animationDelay: "1s" }}></div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <div className="animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 backdrop-blur-sm rounded-full mb-6" style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}>
               <CheckCircle className="w-4 h-4 text-white" />
               <span className="text-sm font-semibold text-white">Únete Ahora</span>
             </div>
@@ -175,7 +175,7 @@ export default function Home() {
               tu experiencia fitness?
             </h2>
 
-            <p className="text-xl md:text-2xl mb-10 text-white/90 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
               Únete a miles de personas que ya entrenan al aire libre con los mejores profesionales
             </p>
 
@@ -198,7 +198,7 @@ export default function Home() {
             </div>
 
             {/* Trust badges */}
-            <div className="flex items-center justify-center gap-8 mt-12 text-white/80">
+            <div className="flex items-center justify-center gap-8 mt-12" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
               <div className="flex items-center gap-2">
                 <CheckCircle className="w-5 h-5" />
                 <span className="text-sm">Sin costo inicial</span>
