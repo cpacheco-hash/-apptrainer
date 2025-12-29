@@ -41,28 +41,35 @@ export default function ClassCard({
   imageUrl,
 }: ClassCardProps) {
   return (
-    <Card variant="interactive" padding="none" className="overflow-hidden">
+    <Card variant="interactive" padding="none" className="overflow-hidden animate-fade-in-up">
       {/* Image */}
-      <div className="relative h-48 bg-gradient-to-br from-primary-400 to-secondary-400">
+      <div className="relative h-48 bg-gradient-to-br from-primary-400 to-secondary-400 overflow-hidden">
         {imageUrl ? (
-          <img src={imageUrl} alt={title} className="w-full h-full object-cover" />
+          <img
+            src={imageUrl}
+            alt={title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-white">
-            <Users className="w-16 h-16 opacity-50" />
+          <div className="w-full h-full flex items-center justify-center text-white bg-gradient-to-br from-primary-500 via-primary-600 to-secondary-600">
+            <Users className="w-16 h-16 opacity-50 transition-transform duration-300 group-hover:scale-110" />
           </div>
         )}
 
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
         {/* Activity Badge */}
         <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-900 capitalize">
+          <span className="px-3 py-1 bg-white/95 backdrop-blur-sm rounded-full text-xs font-semibold text-gray-900 capitalize shadow-md transition-transform duration-200 group-hover:scale-105">
             {activity}
           </span>
         </div>
 
         {/* Spots Badge */}
         {spotsLeft <= 3 && spotsLeft > 0 && (
-          <div className="absolute top-4 right-4">
-            <span className="px-3 py-1 bg-red-500/90 backdrop-blur-sm rounded-full text-xs font-semibold text-white">
+          <div className="absolute top-4 right-4 animate-bounce-subtle">
+            <span className="px-3 py-1 bg-red-500/95 backdrop-blur-sm rounded-full text-xs font-semibold text-white shadow-md">
               ¡Últimos {spotsLeft} cupos!
             </span>
           </div>

@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import { Bell, Plus, Calendar, TrendingUp, Users, DollarSign, Star, ChevronRight } from "lucide-react";
-import Logo from "@/components/Logo";
+import { Plus, Calendar, TrendingUp, Users, DollarSign, Star, ChevronRight, Activity, Award, Clock } from "lucide-react";
+import Navbar from "@/components/Navbar";
 import Button from "@/components/Button";
-import Card, { CardHeader, CardTitle, CardContent } from "@/components/Card";
+import Card from "@/components/Card";
 import { formatCurrency } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -73,118 +73,109 @@ const recentReservations = [
 ];
 
 export default function DashboardEntrenadorPage() {
+  const navItems = [
+    { label: "Mis Clases", href: "/dashboard/entrenador/clases" },
+    { label: "Calendario", href: "/dashboard/entrenador/calendario" },
+    { label: "Alumnos", href: "/dashboard/entrenador/alumnos" },
+    { label: "Ingresos", href: "/dashboard/entrenador/ingresos" },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header/Navbar */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Logo size="sm" href="/dashboard/entrenador" />
+      <Navbar
+        userType="entrenador"
+        userName="Francisco López"
+        userInitials="FL"
+        navItems={navItems}
+        showCreateButton={true}
+        onCreateClick={() => console.log("Crear clase")}
+        notifications={5}
+      />
 
-            <nav className="hidden md:flex items-center gap-6">
-              <a href="#" className="text-gray-700 hover:text-primary-600 font-medium">
-                Mis Clases
-              </a>
-              <a href="#" className="text-gray-700 hover:text-primary-600 font-medium">
-                Calendario
-              </a>
-              <a href="#" className="text-gray-700 hover:text-primary-600 font-medium">
-                Alumnos
-              </a>
-              <a href="#" className="text-gray-700 hover:text-primary-600 font-medium">
-                Ingresos
-              </a>
-            </nav>
-
-            <div className="flex items-center gap-4">
-              <Button variant="primary" size="sm" leftIcon={<Plus className="w-4 h-4" />}>
-                Crear clase
-              </Button>
-
-              <button className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
-
-              <button className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-full transition-colors">
-                <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
-                  FL
-                </div>
-              </button>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up">
+        {/* Welcome Header */}
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Activity className="w-7 h-7 text-white" />
+            </div>
+            <div>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+                ¡Bienvenido de vuelta, Francisco! 👋
+              </h1>
+              <p className="text-gray-600 mt-1">
+                Aquí tienes un resumen de tu actividad este mes
+              </p>
             </div>
           </div>
         </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            ¡Bienvenido de vuelta, Francisco! 👋
-          </h1>
-          <p className="text-gray-600">
-            Aquí tienes un resumen de tu actividad este mes
-          </p>
-        </div>
 
         {/* Stats Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {/* Revenue Card */}
-          <Card variant="elevated" padding="lg">
+          <div className="group relative bg-gradient-to-br from-green-50 to-white p-6 rounded-2xl border border-green-100 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-green-600" />
+              <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                <DollarSign className="w-7 h-7 text-white" />
               </div>
-              <div className="px-2 py-1 bg-green-100 rounded-full">
-                <span className="text-xs font-semibold text-green-700">+12%</span>
+              <div className="px-3 py-1.5 bg-green-100 rounded-full animate-pulse-subtle">
+                <span className="text-xs font-bold text-green-700">+12%</span>
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Ingresos del mes</p>
-            <p className="text-2xl font-bold text-gray-900">{formatCurrency(stats.monthlyRevenue)}</p>
-          </Card>
+            <p className="text-sm text-gray-600 mb-2 font-medium">Ingresos del mes</p>
+            <p className="text-3xl font-bold text-gray-900">{formatCurrency(stats.monthlyRevenue)}</p>
+          </div>
 
           {/* Classes Card */}
-          <Card variant="elevated" padding="lg">
+          <div className="group relative bg-gradient-to-br from-primary-50 to-white p-6 rounded-2xl border border-primary-100 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                <Calendar className="w-6 h-6 text-primary-600" />
+              <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                <Calendar className="w-7 h-7 text-white" />
               </div>
-              <div className="px-2 py-1 bg-blue-100 rounded-full">
-                <span className="text-xs font-semibold text-blue-700">+8%</span>
+              <div className="px-3 py-1.5 bg-blue-100 rounded-full animate-pulse-subtle">
+                <span className="text-xs font-bold text-blue-700">+8%</span>
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Clases este mes</p>
-            <p className="text-2xl font-bold text-gray-900">{stats.totalClasses}</p>
-          </Card>
+            <p className="text-sm text-gray-600 mb-2 font-medium">Clases este mes</p>
+            <p className="text-3xl font-bold text-gray-900">{stats.totalClasses}</p>
+          </div>
 
           {/* Students Card */}
-          <Card variant="elevated" padding="lg">
+          <div className="group relative bg-gradient-to-br from-secondary-50 to-white p-6 rounded-2xl border border-secondary-100 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
-              <div className="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-secondary-600" />
+              <div className="w-14 h-14 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                <Users className="w-7 h-7 text-white" />
               </div>
-              <div className="px-2 py-1 bg-purple-100 rounded-full">
-                <span className="text-xs font-semibold text-purple-700">+15%</span>
+              <div className="px-3 py-1.5 bg-purple-100 rounded-full animate-pulse-subtle">
+                <span className="text-xs font-bold text-purple-700">+15%</span>
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Alumnos activos</p>
-            <p className="text-2xl font-bold text-gray-900">{stats.activeStudents}</p>
-          </Card>
+            <p className="text-sm text-gray-600 mb-2 font-medium">Alumnos activos</p>
+            <p className="text-3xl font-bold text-gray-900">{stats.activeStudents}</p>
+          </div>
 
           {/* Rating Card */}
-          <Card variant="elevated" padding="lg">
+          <div className="group relative bg-gradient-to-br from-yellow-50 to-white p-6 rounded-2xl border border-yellow-100 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
-              <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <Star className="w-6 h-6 text-yellow-600" />
+              <div className="w-14 h-14 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                <Award className="w-7 h-7 text-white" />
               </div>
-              <div className="px-2 py-1 bg-yellow-100 rounded-full">
-                <span className="text-xs font-semibold text-yellow-700">Excelente</span>
+              <div className="px-3 py-1.5 bg-yellow-100 rounded-full">
+                <span className="text-xs font-bold text-yellow-700">⭐ Top</span>
               </div>
             </div>
-            <p className="text-sm text-gray-600 mb-1">Calificación promedio</p>
-            <p className="text-2xl font-bold text-gray-900">{stats.averageRating}</p>
-          </Card>
+            <p className="text-sm text-gray-600 mb-2 font-medium">Calificación promedio</p>
+            <div className="flex items-center gap-2">
+              <p className="text-3xl font-bold text-gray-900">{stats.averageRating}</p>
+              <div className="flex">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star key={star} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">

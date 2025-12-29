@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import { Bell, Heart, User } from "lucide-react";
-import Logo from "@/components/Logo";
+import { MapPin, Filter, Grid3x3, List } from "lucide-react";
+import Navbar from "@/components/Navbar";
 import SearchBar from "@/components/SearchBar";
 import MapView from "@/components/MapView";
 import ClassCard from "@/components/ClassCard";
@@ -123,90 +123,103 @@ const mockClasses = [
 ];
 
 export default function DashboardAlumnoPage() {
+  const navItems = [
+    { label: "Mis Clases", href: "/dashboard/alumno/clases" },
+    { label: "Favoritos", href: "/dashboard/alumno/favoritos" },
+    { label: "Entrenadores", href: "/dashboard/alumno/entrenadores" },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header/Navbar */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Logo size="sm" href="/dashboard/alumno" />
-
-            <nav className="hidden md:flex items-center gap-6">
-              <a href="#" className="text-gray-700 hover:text-primary-600 font-medium">
-                Mis Clases
-              </a>
-              <a href="#" className="text-gray-700 hover:text-primary-600 font-medium">
-                Favoritos
-              </a>
-              <a href="#" className="text-gray-700 hover:text-primary-600 font-medium">
-                Entrenadores
-              </a>
-            </nav>
-
-            <div className="flex items-center gap-4">
-              <button className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-              </button>
-
-              <button className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
-                <Heart className="w-5 h-5" />
-              </button>
-
-              <button className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-full transition-colors">
-                <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center text-white text-sm font-semibold">
-                  M
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Navbar
+        userType="alumno"
+        userName="María González"
+        userInitials="MG"
+        navItems={navItems}
+        notifications={3}
+      />
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Page Title */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Reserva clases deportivas al aire libre
-          </h1>
-          <p className="text-gray-600">
-            Encuentra entrenadores cerca de ti y reserva tu próxima clase
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in-up">
+        {/* Page Header */}
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center shadow-md">
+              <MapPin className="w-6 h-6 text-white" />
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+              Descubre Clases Cerca de Ti
+            </h1>
+          </div>
+          <p className="text-lg text-gray-600 max-w-2xl">
+            Explora y reserva las mejores clases outdoor con entrenadores certificados en tu zona
           </p>
         </div>
 
         {/* Search Bar */}
-        <div className="mb-8">
+        <div className="mb-10">
           <SearchBar />
         </div>
 
+        {/* Quick Filters */}
+        <div className="mb-8 flex gap-3 overflow-x-auto pb-2 custom-scrollbar">
+          {["Todos", "Yoga", "Running", "Funcional", "Bootcamp", "Pilates"].map((filter) => (
+            <button
+              key={filter}
+              className={`px-5 py-2.5 rounded-full font-medium whitespace-nowrap transition-all duration-200 ${
+                filter === "Todos"
+                  ? "bg-primary-600 text-white shadow-md hover:shadow-lg hover:scale-105"
+                  : "bg-white text-gray-700 border border-gray-200 hover:border-primary-600 hover:text-primary-600 hover:shadow-md"
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+
         {/* Map Section */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">
-              Clases cerca de ti
-            </h2>
-            <button className="text-sm text-primary-600 hover:text-primary-700 font-medium">
+        <div className="mb-10">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <h2 className="text-2xl font-bold text-gray-900">
+                Mapa Interactivo
+              </h2>
+              <span className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold">
+                {mockClasses.length} clases
+              </span>
+            </div>
+            <button className="flex items-center gap-2 px-4 py-2 text-primary-600 hover:bg-primary-50 rounded-lg font-medium transition-colors">
+              <List className="w-4 h-4" />
               Ver lista
             </button>
           </div>
-          <MapView classes={mockClasses} />
+          <div className="rounded-2xl overflow-hidden shadow-card-hover border border-gray-200">
+            <MapView classes={mockClasses} />
+          </div>
         </div>
 
         {/* Classes List */}
         <div>
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
             <div>
-              <h2 className="text-2xl font-semibold text-gray-900">
-                Clases disponibles
+              <h2 className="text-3xl font-bold text-gray-900">
+                Clases Disponibles
               </h2>
-              <p className="text-sm text-gray-600 mt-1">
-                {mockClasses.length} clases encontradas
+              <p className="text-gray-600 mt-2 flex items-center gap-2">
+                <span className="inline-block w-2 h-2 bg-primary-600 rounded-full animate-pulse-subtle"></span>
+                {mockClasses.length} clases encontradas en tu área
               </p>
             </div>
 
-            <div className="flex items-center gap-4">
-              <select className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm">
+            <div className="flex items-center gap-3">
+              <button className="p-2.5 bg-white border border-gray-200 rounded-lg hover:bg-primary-50 hover:border-primary-600 transition-colors">
+                <Grid3x3 className="w-5 h-5 text-gray-700" />
+              </button>
+              <button className="p-2.5 bg-white border border-gray-200 rounded-lg hover:bg-primary-50 hover:border-primary-600 transition-colors">
+                <List className="w-5 h-5 text-gray-700" />
+              </button>
+              <select className="input-primary min-w-[180px] py-2.5">
                 <option>Más cercanas</option>
                 <option>Mejor calificadas</option>
                 <option>Menor precio</option>
@@ -215,16 +228,30 @@ export default function DashboardAlumnoPage() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mockClasses.map((classItem) => (
-              <ClassCard key={classItem.id} {...classItem} />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            {mockClasses.map((classItem, index) => (
+              <div
+                key={classItem.id}
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <ClassCard {...classItem} />
+              </div>
             ))}
           </div>
 
           {/* Load More */}
-          <div className="mt-8 text-center">
-            <button className="px-6 py-3 bg-white border-2 border-gray-300 rounded-full font-medium text-gray-700 hover:border-primary-600 hover:text-primary-600 transition-colors">
+          <div className="text-center">
+            <button className="group px-8 py-4 bg-white border-2 border-primary-600 text-primary-600 rounded-full font-semibold hover:bg-primary-600 hover:text-white shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 mx-auto">
               Cargar más clases
+              <svg
+                className="w-5 h-5 group-hover:rotate-180 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
           </div>
         </div>

@@ -17,6 +17,7 @@
     "@heroicons/react": "^2.2.0",
     "@prisma/client": "^7.2.0",
     "@react-google-maps/api": "^2.20.8",
+    "@tailwindcss/postcss": "^4.1.18",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.562.0",

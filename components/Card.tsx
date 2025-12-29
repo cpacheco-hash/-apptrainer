@@ -8,14 +8,14 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = "default", padding = "md", children, ...props }, ref) => {
-    const baseStyles = "rounded-2xl";
+    const baseStyles = "rounded-2xl transition-all duration-300";
 
     const variantStyles = {
-      default: "bg-white",
-      bordered: "bg-white border border-gray-200",
-      elevated: "bg-white shadow-lg",
+      default: "bg-white shadow-card",
+      bordered: "bg-white border border-gray-200 shadow-card",
+      elevated: "bg-white shadow-card-hover",
       interactive:
-        "bg-white border border-gray-200 hover:shadow-lg hover:scale-[1.02] transition-all duration-200 cursor-pointer",
+        "bg-white border border-gray-200 shadow-card hover:shadow-card-hover hover:-translate-y-1 cursor-pointer group",
     };
 
     const paddingStyles = {

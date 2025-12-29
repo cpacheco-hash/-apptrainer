@@ -25,12 +25,15 @@ export default function RegistroAlumnoPage() {
         </div>
 
         {/* Registration Form */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="bg-white rounded-2xl shadow-card-hover border border-gray-100 p-8 animate-fade-in-up">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl mb-4 shadow-lg">
+              <Heart className="w-8 h-8 text-white" />
+            </div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-3">
               Registro de Alumno
             </h1>
-            <p className="text-gray-600">
+            <p className="text-lg text-gray-600">
               Crea tu cuenta y comienza a entrenar outdoor
             </p>
           </div>
@@ -45,28 +48,28 @@ export default function RegistroAlumnoPage() {
 
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                     Nombre completo *
                   </label>
                   <input
                     type="text"
                     id="name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
+                    className="input-primary"
                     placeholder="María González"
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                     Email *
                   </label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                    <Mail className="absolute left-3 top-3.5 w-5 h-5 text-gray-400 pointer-events-none" />
                     <input
                       type="email"
                       id="email"
-                      className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
+                      className="input-primary pl-11"
                       placeholder="maria@example.com"
                       required
                     />
@@ -74,15 +77,15 @@ export default function RegistroAlumnoPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                     Teléfono *
                   </label>
                   <div className="relative">
-                    <Phone className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
+                    <Phone className="absolute left-3 top-3.5 w-5 h-5 text-gray-400 pointer-events-none" />
                     <input
                       type="tel"
                       id="phone"
-                      className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
+                      className="input-primary pl-11"
                       placeholder="+56 9 1234 5678"
                       required
                     />
@@ -90,13 +93,13 @@ export default function RegistroAlumnoPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                     Contraseña *
                   </label>
                   <input
                     type="password"
                     id="password"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
+                    className="input-primary"
                     placeholder="••••••••"
                     required
                   />
@@ -113,13 +116,14 @@ export default function RegistroAlumnoPage() {
 
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="interests" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="interests" className="block text-sm font-medium text-gray-700 mb-2">
                     ¿Qué actividades te interesan?
                   </label>
                   <select
                     id="interests"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary-500 focus:border-transparent"
+                    className="input-primary"
                     multiple
+                    size={5}
                   >
                     <option value="yoga">Yoga</option>
                     <option value="funcional">Funcional</option>
@@ -127,7 +131,7 @@ export default function RegistroAlumnoPage() {
                     <option value="bootcamp">Bootcamp</option>
                     <option value="pilates">Pilates</option>
                   </select>
-                  <p className="text-xs text-gray-500 mt-1">Mantén presionado Ctrl (Cmd en Mac) para seleccionar múltiples opciones</p>
+                  <p className="text-xs text-gray-500 mt-2">Mantén presionado Ctrl (Cmd en Mac) para seleccionar múltiples opciones</p>
                 </div>
               </div>
             </div>
