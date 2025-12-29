@@ -1,0 +1,257 @@
+// Prisma Schema for AppTrainer
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // o "sqlite" para desarrollo local
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum UserRole {
+  ALUMNO
+  ENTRENADOR
+  ADMIN
+}
+
+enum ClassStatus {
+  PROGRAMADA
+  COMPLETADA
+  CANCELADA
+}
+
+enum ClassType {
+  INDIVIDUAL
+  GRUPAL
+}
+
+enum Activity {
+  YOGA
+  FUNCIONAL
+  RUNNING
+  BOOTCAMP
+  PILATES
+  OTRO
+}
+
+enum ReservationStatus {
+  PENDIENTE
+  CONFIRMADA
+  COMPLETADA
+  CANCELADA
+}
+
+enum PaymentStatus {
+  PENDIENTE
+  PROCESANDO
+  COMPLETADO
+  FALLIDO
+  REEMBOLSADO
+}
+
+enum PaymentMethod {
+  WEBPAY
+  TARJETA
+  TRANSFERENCIA
+}
+
+enum NotificationType {
+  RESERVA
+  PAGO
+  CANCELACION
+  RECORDATORIO
+  MENSAJE
+}
+
+// Models
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  role      UserRole
+  phone     String?
+  avatar    String?
+  password  String   // Hashed password
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  alumno     Alumno?
+  entrenador Entrenador?
+
+  @@map("users")
+}
+
+model Alumno {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  favoriteTrainers String[] // Array of trainer IDs
+
+  // Relations
+  reservations Reservation[]
+  reviews      Review[]
+  messages     Message[]     @relation("AlumnoMessages")
+
+  @@map("alumnos")
+}
+
+model Entrenador {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio              String?
+  specialties      String[] // Array of activities
+  rating           Float    @default(0)
+  totalReviews     Int      @default(0)
+  locationName     String?
+  locationAddress  String?
+  locationLat      Float?
+  locationLng      Float?
+  locationCity     String?
+  locationComuna   String?
+  bankName         String?
+  accountType      String?
+  accountNumber    String?
+  rut              String?
+  accountHolder    String?
+  verified         Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  classes        Class[]
+  certifications Certification[]
+  reviews        Review[]
+  messages       Message[]       @relation("EntrenadorMessages")
+
+  @@map("entrenadores")
+}
+
+model Certification {
+  id             String     @id @default(cuid())
+  entrenadorId   String
+  entrenador     Entrenador @relation(fields: [entrenadorId], references: [id], onDelete: Cascade)
+  name           String
+  institution    String
+  year           Int
+  imageUrl       String?
+  verified       Boolean    @default(false)
+  createdAt      DateTime   @default(now())
+
+  @@map("certifications")
+}
+
+model Class {
+  id               String      @id @default(cuid())
+  entrenadorId     String
+  entrenador       Entrenador  @relation(fields: [entrenadorId], references: [id], onDelete: Cascade)
+  title            String
+  description      String
+  activity         Activity
+  type             ClassType
+  date             DateTime
+  startTime        String
+  duration         Int // minutes
+  price            Float // CLP
+  maxCapacity      Int
+  currentCapacity  Int         @default(0)
+  locationName     String
+  locationAddress  String
+  locationLat      Float
+  locationLng      Float
+  locationCity     String
+  locationComuna   String
+  status           ClassStatus @default(PROGRAMADA)
+  imageUrl         String?
+  requirements     String?
+  cancellationPolicy String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  // Relations
+  reservations Reservation[]
+
+  @@map("classes")
+}
+
+model Reservation {
+  id            String            @id @default(cuid())
+  alumnoId      String
+  alumno        Alumno            @relation(fields: [alumnoId], references: [id], onDelete: Cascade)
+  classId       String
+  class         Class             @relation(fields: [classId], references: [id], onDelete: Cascade)
+  status        ReservationStatus @default(PENDIENTE)
+  paymentStatus PaymentStatus     @default(PENDIENTE)
+  amount        Float // CLP
+  commission    Float // Platform commission
+  paymentMethod PaymentMethod?
+  transactionId String?
+  canceledAt    DateTime?
+  cancelReason  String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  // Relations
+  payment Payment?
+
+  @@map("reservations")
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  reservationId String        @unique
+  reservation   Reservation   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  amount        Float
+  method        PaymentMethod
+  status        PaymentStatus @default(PENDIENTE)
+  transactionId String?
+  processedAt   DateTime?
+  createdAt     DateTime      @default(now())
+
+  @@map("payments")
+}
+
+model Review {
+  id           String     @id @default(cuid())
+  alumnoId     String
+  alumno       Alumno     @relation(fields: [alumnoId], references: [id], onDelete: Cascade)
+  entrenadorId String
+  entrenador   Entrenador @relation(fields: [entrenadorId], references: [id], onDelete: Cascade)
+  classId      String
+  rating       Int // 1-5
+  comment      String?
+  createdAt    DateTime   @default(now())
+
+  @@map("reviews")
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  read      Boolean          @default(false)
+  actionUrl String?
+  createdAt DateTime         @default(now())
+
+  @@map("notifications")
+}
+
+model Message {
+  id           String   @id @default(cuid())
+  senderId     String
+  receiverId   String
+  content      String
+  read         Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  // Relations
+  sender   Alumno?     @relation("AlumnoMessages", fields: [senderId], references: [id])
+  receiver Entrenador? @relation("EntrenadorMessages", fields: [receiverId], references: [id])
+
+  @@map("messages")
+}
