@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" // o "sqlite" para desarrollo local
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -91,9 +91,10 @@ model Alumno {
   favoriteTrainers String[] // Array of trainer IDs
 
   // Relations
-  reservations Reservation[]
-  reviews      Review[]
-  messages     Message[]     @relation("AlumnoMessages")
+  reservations     Reservation[]
+  reviews          Review[]
+  messages         Message[]     @relation("AlumnoMessages")
+  groupMemberships GroupMember[]
 
   @@map("alumnos")
 }
@@ -102,6 +103,7 @@ model Entrenador {
   id               String   @id @default(cuid())
   userId           String   @unique
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  username         String   @unique // Para perfil público
   bio              String?
   specialties      String[] // Array of activities
   rating           Float    @default(0)
@@ -126,8 +128,36 @@ model Entrenador {
   certifications Certification[]
   reviews        Review[]
   messages       Message[]       @relation("EntrenadorMessages")
+  groups         Group[]
 
   @@map("entrenadores")
+}
+
+model Group {
+  id           String   @id @default(cuid())
+  entrenadorId String
+  entrenador   Entrenador @relation(fields: [entrenadorId], references: [id], onDelete: Cascade)
+  name         String
+  description  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  members GroupMember[]
+
+  @@map("groups")
+}
+
+model GroupMember {
+  id        String   @id @default(cuid())
+  groupId   String
+  group     Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  alumnoId  String
+  alumno    Alumno   @relation(fields: [alumnoId], references: [id], onDelete: Cascade)
+  addedAt   DateTime @default(now())
+
+  @@unique([groupId, alumnoId])
+  @@map("group_members")
 }
 
 model Certification {
@@ -189,6 +219,8 @@ model Reservation {
   commission    Float // Platform commission
   paymentMethod PaymentMethod?
   transactionId String?
+  confirmToken  String?           @unique // Para confirmación por link
+  confirmedAt   DateTime? // Timestamp de confirmación
   canceledAt    DateTime?
   cancelReason  String?
   createdAt     DateTime          @default(now())
