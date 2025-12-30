@@ -6,9 +6,10 @@ import crypto from 'crypto';
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await getServerSession();
 
     if (!session?.user || session.user.role !== 'ENTRENADOR') {
@@ -49,7 +50,7 @@ export async function POST(
 
     // Obtener la clase
     const classData = await prisma.class.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         entrenador: {
           include: { user: true }
@@ -91,7 +92,7 @@ export async function POST(
         const reservation = await prisma.reservation.create({
           data: {
             alumnoId: member.alumno.id,
-            classId: params.id,
+            classId: id,
             status: 'PENDIENTE',
             paymentStatus: 'PENDIENTE',
             amount: classData.price,
@@ -136,7 +137,7 @@ export async function POST(
 
     // Actualizar currentCapacity de la clase
     await prisma.class.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         currentCapacity: currentReservations + requiredSpots
       }

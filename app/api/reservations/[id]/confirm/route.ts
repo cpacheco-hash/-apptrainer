@@ -3,9 +3,10 @@ import prisma from '@/lib/prisma';
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { token } = await request.json();
 
     if (!token) {
@@ -15,7 +16,7 @@ export async function POST(
     // Buscar reserva por token
     const reservation = await prisma.reservation.findFirst({
       where: {
-        id: params.id,
+        id,
         confirmToken: token
       },
       include: {
@@ -37,7 +38,7 @@ export async function POST(
 
     // Actualizar reserva a confirmada
     const updatedReservation = await prisma.reservation.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         status: 'CONFIRMADA',
         confirmedAt: new Date()
@@ -79,9 +80,10 @@ export async function POST(
 // GET - Obtener información de reserva por token (para mostrar en página de confirmación)
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const { searchParams } = new URL(request.url);
     const token = searchParams.get('token');
 
@@ -91,7 +93,7 @@ export async function GET(
 
     const reservation = await prisma.reservation.findFirst({
       where: {
-        id: params.id,
+        id,
         confirmToken: token
       },
       include: {
