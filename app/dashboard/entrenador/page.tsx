@@ -1,14 +1,10 @@
-import { Metadata } from "next";
+"use client";
+
 import { Plus, Calendar, TrendingUp, Users, DollarSign, Star, ChevronRight, Activity, Award, Clock } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import { formatCurrency } from "@/lib/utils";
-
-export const metadata: Metadata = {
-  title: "Dashboard Entrenador - AppTrainer",
-  description: "Gestiona tus clases, horarios e ingresos",
-};
 
 // Mock data
 const stats = {
