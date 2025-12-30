@@ -1,6 +1,17 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazy instantiation - solo crea la instancia cuando se necesita
+let resendInstance: Resend | null = null;
+
+function getResendInstance(): Resend {
+  if (!resendInstance) {
+    if (!process.env.RESEND_API_KEY) {
+      throw new Error('RESEND_API_KEY is not configured');
+    }
+    resendInstance = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resendInstance;
+}
 
 export async function sendClassAssignmentEmail(
   to: string,
@@ -11,6 +22,7 @@ export async function sendClassAssignmentEmail(
   const confirmUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/confirm/${confirmToken}`;
 
   try {
+    const resend = getResendInstance();
     await resend.emails.send({
       from: process.env.FROM_EMAIL || 'AppTrainer <noreply@apptrainer.cl>',
       to,
@@ -106,6 +118,7 @@ export async function sendClassAssignmentEmail(
 
 export async function sendWelcomeEmail(to: string, name: string, role: string) {
   try {
+    const resend = getResendInstance();
     await resend.emails.send({
       from: process.env.FROM_EMAIL || 'AppTrainer <noreply@apptrainer.cl>',
       to,
